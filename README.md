@@ -10,23 +10,24 @@ On the JVM it prints `MonitorGc: done`.
 
 ## Reproduce
 
-Requirements: JDK 17+, Gradle, CMake, a C compiler (Visual Studio Build Tools on Windows).
+Requirements: JDK 17+, CMake, a C compiler (Visual Studio Build Tools on Windows). Gradle is not
+needed: the Gradle wrapper is included.
 
 Windows (x64 or ARM64):
 
 ```
-gradle generateC
 build-c.bat
 bin\Release\monitorgc.exe
 echo %ERRORLEVEL%
 ```
 
-(`build-c.bat x64` or `build-c.bat ARM64` forces the architecture; otherwise the one of the machine is used.)
+(`build-c.bat` runs `gradlew.bat generateC` first if the C sources are not generated yet, then CMake.
+`build-c.bat x64` or `build-c.bat ARM64` forces the architecture; otherwise the one of the machine is used.)
 
 Other platforms (not tested by me):
 
 ```
-gradle generateC
+./gradlew generateC
 cmake -S . -B build/cmake
 cmake --build build/cmake
 ./bin/monitorgc
